@@ -35,6 +35,8 @@ a{color:inherit}
 .box span{grid-column:span 3;font-size:12px;text-align:center;align-self:center}
 h2{font-size:28px;font-weight:500;margin:30px 0 8px;letter-spacing:-.5px}
 .step{display:flex;gap:14px;margin-top:16px}
+.step.sv{display:grid;grid-template-columns:34px 1fr 200px;gap:16px;align-items:start;background:#fff;border-radius:16px;padding:14px}.step.sv .frame{width:200px}.vlab{margin-top:12px;padding:10px 12px;border-radius:12px;background:var(--cream)}.vlab b{display:block;font-weight:600}.vlab small{display:block;font-size:12px;opacity:.8;margin:2px 0 6px}
+@media (max-width:760px){.step.sv{grid-template-columns:34px 1fr}.step.sv .frame{grid-column:2;width:100%;max-width:240px}}
 .num{width:34px;height:34px;border-radius:50%;background:var(--yellow);border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:15px;flex:none}
 .step p{margin:4px 0 0;font-size:16px;line-height:1.45}
 .step b{font-weight:500}
@@ -219,7 +221,7 @@ function brand(b,k){return `<div class="meta"><span>Hello Nancy · advent resear
 <span class="section">${b.sec}</span>
 <div class="hero" style="background:${b.bg}"><div><h1>${b.name}</h1><p>${b.about}</p><div class="chips"><span class="chip ig">📸 ${b.f} Instagram followers</span><span class="chip when">🗓 ${b.when}</span>${b.chips.map(c=>`<span class="chip">${c}</span>`).join('')}</div></div>
 <div class="cal"><img src="${b.img}" alt="${b.name} advent calendar 2026" referrerpolicy="no-referrer" loading="lazy"><small>${b.cap}</small></div></div>
-<h2>What they did</h2>${b.steps.map((s,j)=>`<div class="step"><div class="num">${j+1}</div><div><p><b>${s[0]}</b> ${s[1]}</p>${s[2]?media(s[2]):''}</div></div>`).join('')}
+<h2>What they did</h2>${b.steps.map((s,j)=>{const ig=s[2]&&(s[2][2].match(/instagram\.com\/p\/([^/]+)/)||[])[1];return ig?`<div class="step sv"><div class="num">${j+1}</div><div class="stx"><p><b>${s[0]}</b> ${s[1]}</p><div class="vlab"><b>${s[2][0]}</b><small>${s[2][1]}</small><a class="cap" href="${s[2][2]}" target="_blank" rel="noopener">Open on Instagram ↗</a></div></div><div class="frame" data-code="${ig}"><a class="ph" href="${s[2][2]}" target="_blank" rel="noopener">▶<br>Watch on Instagram</a></div></div>`:`<div class="step"><div class="num">${j+1}</div><div><p><b>${s[0]}</b> ${s[1]}</p>${s[2]?media(s[2]):''}</div></div>`}).join('')}
 <div class="panel" style="background:${C.r}"><h2 style="margin:0">Where they said it <span style="font-size:14px;font-weight:400">tap one</span></h2><div class="plats">${b.plats.map((p,j)=>`<button class="plat${j?'':' on'}" data-h="${p[1].replace(/"/g,'&quot;')}">${p[0]}</button>`).join('')}</div><div class="how">${b.plats[0][1]}</div></div>
 <h2>Top 5 Instagram Reels</h2>${reels(b)}
 <div class="nancy"><h2 style="margin:0">For Nancy</h2><p>${b.nancy}</p></div>`}
