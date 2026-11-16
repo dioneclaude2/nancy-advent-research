@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hello Nancy · Advent calendar research</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#FF30CC;--ink:#4B1528;--cream:#FFF7F0;--yellow:#FFF36B;--blue:#C9ECFF;--rose:#FFD6EC;--mint:#E3F7C9;--lilac:#E7DDFF}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--pink);color:var(--ink);font-family:'Bricolage Grotesque',system-ui,sans-serif}
+a{color:inherit}
+.top{position:sticky;top:0;z-index:5;background:var(--pink);display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:14px 20px}
+.pill{border:2px solid var(--ink);border-radius:999px;padding:7px 16px;font-size:14px;background:var(--cream);cursor:pointer;font-family:inherit;color:var(--ink)}
+.pill.on{background:var(--ink);color:var(--cream)}
+.seg{display:inline-flex;border:2px solid var(--ink);border-radius:999px;overflow:hidden;background:var(--cream)}
+.seg button{border:0;background:none;padding:7px 14px;font-size:14px;cursor:pointer;font-family:inherit;color:var(--ink)}
+.seg button.on{background:var(--ink);color:var(--cream)}
+.count{margin-left:auto;color:var(--cream);font-size:14px}
+.stage{padding:0 20px 110px}
+.page{display:none;max-width:860px;margin:0 auto;background:var(--cream);border-radius:22px;padding:30px 34px 36px;animation:in .35s ease}
+.page.on{display:block}
+@keyframes in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.meta{display:flex;justify-content:space-between;font-size:13px}
+.hero{border-radius:18px;padding:22px;margin-top:16px;display:grid;grid-template-columns:1fr 210px;gap:18px;align-items:center}
+.hero h1{font-size:64px;line-height:.92;margin:0;font-weight:500;letter-spacing:-2px}
+.hero p{font-size:15px;line-height:1.5;margin:10px 0 0}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.chip{border:2px solid var(--ink);border-radius:999px;padding:4px 12px;font-size:13px;background:var(--cream)}
+.box{background:var(--cream);border-radius:14px;height:210px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:12px}
+.box i{border-radius:6px;display:block}
+.box span{grid-column:span 3;font-size:12px;text-align:center;align-self:center}
+h2{font-size:28px;font-weight:500;margin:30px 0 8px;letter-spacing:-.5px}
+.step{display:flex;gap:14px;margin-top:16px}
+.num{width:34px;height:34px;border-radius:50%;background:var(--yellow);border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:15px;flex:none}
+.step p{margin:4px 0 0;font-size:16px;line-height:1.45}
+.step b{font-weight:500}
+.media{display:flex;gap:12px;align-items:center;background:#fff;border-radius:14px;padding:10px;margin-top:10px;text-decoration:none;border:2px solid transparent;max-width:460px}
+a.media:hover{border-color:var(--ink)}
+.th{width:84px;height:58px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex:none}
+.media small{display:block;font-size:12px;opacity:.8}
+.panel{border-radius:18px;padding:18px 20px;margin-top:26px}
+.plats{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.plat{border:2px solid var(--ink);border-radius:999px;padding:6px 14px;font-size:14px;background:var(--cream);cursor:pointer;font-family:inherit;color:var(--ink)}
+.plat.on{background:var(--ink);color:var(--cream)}
+.how{background:var(--cream);border-radius:12px;padding:12px 14px;font-size:15px;margin-top:12px;line-height:1.45}
+.rank{display:inline-block;font-size:11px;border-radius:999px;padding:2px 8px;background:var(--ink);color:var(--cream);margin-left:6px;vertical-align:2px}
+.reels{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:14px}
+.reel{display:flex;flex-direction:column;gap:8px}
+.frame{position:relative;width:100%;aspect-ratio:9/16;border-radius:14px;overflow:hidden;background:var(--rose)}
+.frame iframe{position:absolute;top:0;left:0;width:326px;height:580px;border:0;transform-origin:0 0}
+.frame .ph{text-decoration:none;color:var(--ink);position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:12px;text-align:center;padding:8px}
+.score{display:flex;align-items:center;gap:8px}
+.score b{background:var(--ink);color:var(--cream);border-radius:999px;padding:4px 10px;font-size:14px;font-weight:500}
+.score span{font-size:12px}
+.cap{font-size:12px;line-height:1.3}
+.tag{font-size:11px;border-radius:999px;padding:2px 8px;border:1.5px dashed var(--ink);align-self:flex-start}
+.note{font-size:13px;margin:4px 0 0;line-height:1.45}
+.nancy{background:var(--yellow);border-radius:18px;padding:18px 20px;margin-top:26px}
+.nancy p{font-size:16px;line-height:1.5;margin:6px 0 0}
+.nav{position:fixed;left:0;right:0;bottom:18px;display:flex;justify-content:center;gap:10px;align-items:center;z-index:6}
+.nav button{width:46px;height:46px;border-radius:50%;border:2px solid var(--ink);background:var(--cream);font-size:20px;cursor:pointer;color:var(--ink)}
+.dots{display:flex;gap:6px;background:var(--cream);border:2px solid var(--ink);border-radius:999px;padding:8px 12px}
+.dots i{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--ink);cursor:pointer;display:block}
+.dots i.on{background:var(--ink)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.card{border-radius:16px;padding:16px}
+.card h3{margin:0;font-size:20px;font-weight:500}
+.card p{margin:6px 0 0;font-size:14px;line-height:1.45}
+.list{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:14px}
+.li{background:#fff;border-radius:14px;padding:12px;cursor:pointer;border:2px solid transparent}
+.li:hover{border-color:var(--ink)}
+.li b{font-weight:500;font-size:17px;display:block}
+.li span{font-size:12px}
+.section{display:inline-block;background:var(--lilac);border-radius:999px;padding:4px 12px;font-size:13px;margin-top:6px}
+@media (max-width:760px){.hero{grid-template-columns:1fr}.hero h1{font-size:46px}.reels{grid-template-columns:repeat(2,minmax(0,1fr))}.grid2{grid-template-columns:1fr}.page{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top">
+<button class="pill" id="pFind">Brand search findings</button>
+<div class="seg"><button id="y26" class="on">2026</button><button id="y25">2025</button></div>
+<button class="pill" id="pDeck">Deck</button>
+<span class="count" id="count"></span>
+</div>
+<div class="stage" id="stage"></div>
+<div class="nav"><button id="prev" aria-label="Previous">&larr;</button><div class="dots" id="dots"></div><button id="next" aria-label="Next">&rarr;</button></div>
+
+<script>
+const C={y:'#FFF36B',b:'#C9ECFF',r:'#FFD6EC',m:'#E3F7C9',l:'#E7DDFF'};
+const B=[
+{id:'liberty',name:'Liberty',sec:'Beauty',bg:C.b,about:'London department store. Sells a beauty advent calendar every year.',chips:['1.2M on Instagram','£285 · worth £1,300','Sold out 11 years running'],
+steps:[
+['Made people wait.','The waitlist opened in summer. Join early, buy first.'],
+['Told a funny story.','A short film where a famous actress plays the boss who checks every product.',['Watch the film','Liberty’s page: film + full unboxing','https://www.libertylondon.com/uk/features/beauty/beauty-advent-calendar','▶',C.r]],
+['Hid golden tickets.','20 boxes had a £1,000 shopping voucher inside.',['See the first look','Their #1 Reel: behind the doors','https://www.instagram.com/p/Dcynd-xjR8T/','🎟',C.y]],
+['Made tiny paper worlds.','Summer teasers showed the box inside paper-cut scenes.',['See the paper worlds','Meet the artist','https://www.libertylondon.com/us/features/beauty/charles-young-in-the-studio.html','✂',C.m]]],
+plats:[['Instagram','Paper-world teasers in summer, then the film on launch day. Their first-look Reel got 89x their normal views.'],['Email','The waitlist got the “it’s live” email first.'],['Creators','Gave free boxes to creators to unbox on video.'],['Press','Beauty magazines reviewed every product.']],
+nancy:'Our golden tickets and early access already copy this. Add one funny story people want to share.',ig:'libertylondon'},
+{id:'spacenk',name:'Space NK',sec:'Beauty',bg:C.r,about:'UK beauty shop. Its calendar is packed with full-size products.',chips:['£275 · worth £1,200','35 products, 26 full size','Not sold out yet'],
+steps:[
+['Made people wait.','The earlier you joined the waitlist, the earlier you could shop.'],
+['Played a game.','Their own shopping bag “stole” the calendar. Fans hunted for clues.',['Watch the bag chase','“We caught the Space NK bag”','https://www.instagram.com/p/DcbPuB9oD8c/','👜',C.r]],
+['Showed everything early.','They revealed every product before launch so people knew the value.',['See the full reveal','“Time to reveal everything”','https://www.instagram.com/p/DcbmmwMM4Rg/','✨',C.b]]],
+plats:[['Instagram','The bag-chase story, then a full product reveal.'],['Email','Waitlist slots: join first, shop first.'],['App','Members shopped on preview day.'],['Paid press','Sponsored reviews in beauty magazines.']],
+nancy:'A mascot with a story works. LEM could “steal” 12 Naughty Nights.',ig:'spacenk'},
+{id:'charlotte',name:'Charlotte Tilbury',sec:'Beauty',bg:C.y,about:'Makeup brand. Puts its bestsellers in a 12-door box.',chips:['7.5M on Instagram','£170 · worth £323','15,000 on the waitlist'],
+steps:[
+['Made a waitlist.','15,000 people signed up before it went on sale.'],
+['App people went first.','App users could buy a full week early.'],
+['Put on a show.','A Hollywood showgirl theme, with a pop star as the face of the holiday campaign.',['Watch the opening','“The curtain is rising” · 3.7x','https://www.instagram.com/p/Dc0kdSjgVt2/','🎭',C.y]],
+['Took over a street.','They turned their Covent Garden store into part of the show.',['See the store','“Covent Garden under a spell”','https://www.instagram.com/p/DdJJZxVB8PA/','🏬',C.l]]],
+plats:[['App','A week of early access for app users.'],['Email','The waitlist heard first.'],['Instagram','Showgirl Reels, like a theatre show.'],['Stores','A Covent Garden store takeover.']],
+nancy:'Reward our list with real early access. Ours already does this.',ig:'charlottetilbury'},
+{id:'rituals',name:'Rituals',sec:'Beauty',bg:C.m,about:'Body, bath and home brand. Two calendars you can keep.',chips:['£99 and £172','A train and a townhouse','Sold out online by 14 Oct'],
+steps:[
+['App first.','Sign up in the app before 31 August to get first access.'],
+['A box you keep.','One calendar is a toy train, one is a pop-up house.'],
+['Made it funny.','A Reel joking that their calendar is “booked and busy”.',['Watch it','“Booked and busy” · 1.3x','https://www.instagram.com/p/DfW39MNjBt9/','🚂',C.m]]],
+plats:[['App','Sign up early, shop early.'],['Email','Reminders for app sign-ups.'],['Instagram','Funny Reels about the calendar.'],['Creators','Paid unboxings in many countries.']],
+nancy:'Make the 12 Naughty Nights bag something people keep and show off.',ig:'ritualscosmetics'},
+{id:'mitchell',name:'Made By Mitchell',sec:'Beauty',bg:C.l,about:'UK makeup brand run by its founder, Mitchell.',chips:['£99','37 brand-new products','Still in stock'],
+steps:[
+['The calendar is the launch.','All 37 products are new. Fans film it to see what’s new.'],
+['Founder-voice jokes.','Their top Reel teases Kim Kardashian about her calendar.',['Watch the joke','“Kim if u need a hand…” · 3.7x','https://www.instagram.com/p/DfhMyZTRUf5/','😂',C.l]],
+['Sold on TikTok Shop.','Creators sell it with discount codes.']],
+plats:[['TikTok + Shop','Most sales and creator unboxings happen here.'],['Instagram','Funny founder-voice Reels.'],['Own site','Weekend discounts.']],
+nancy:'Jump on the news with a joke, fast. Our tone already fits.',ig:'madebymitchell'},
+{id:'lovehoney',name:'Lovehoney',sec:'Sex toy brands',bg:C.r,about:'The biggest sex toy shop. Sells five advent calendars.',chips:['From £99','“Worth £487, pay £119”','Price already cut'],
+steps:[
+['Five boxes, five prices.','Solo, couples and luxury versions.'],
+['Big value number.','Every post says how much it is worth vs what you pay.'],
+['Magazines sell it.','Affiliate articles with discount codes do most of the work.']],
+plats:[['Press','Affiliate articles with codes.'],['Retail','Also sold in Boots.'],['Email','Sale reminders.'],['Instagram','Calendar Reels did worse than normal (0.4–0.7x).']],
+nancy:'Their calendar Reels flopped on Instagram. Their funny lifestyle Reels did 8–10x. Make ours fun, not a product list.',ig:'lovehoneyofficial'},
+{id:'satisfyer',name:'Satisfyer',sec:'Sex toy brands',bg:C.b,about:'Toy brand. Sells two 24-door calendars.',chips:['From £94','Toys + lingerie','Not a sell-out'],
+steps:[['Two levels.','Deluxe and Premium.'],['Sold through shops.','Mostly sold by other retailers.']],
+plats:[['Retail','Other shops sell it.'],['Press','Gift guides.'],['Instagram','Only 2 Reels in 90 days. They barely use it.']],
+nancy:'Room for us: no sex toy brand is making fun Instagram content for its calendar.',ig:'satisfyercom'},
+{id:'annsummers',name:'Ann Summers',sec:'Sex toy brands',bg:C.y,about:'UK lingerie and toy shop. Sells several 12-night calendars.',chips:['From £100','12 nights','Discounted'],
+steps:[['Many versions.','Exploration, Seduction, Temptation and more.'],['Big discounts.','Shown as half price.']],
+plats:[['Stores','Sold in its own shops.'],['Press','Gift guides.'],['Instagram','No Reels came back from the scrape.']],
+nancy:'Same as Satisfyer: price-led, no story. A gap we can fill.',ig:null},
+{id:'skims',name:'Skims',sec:'What not to do',bg:C.l,about:'Kim Kardashian’s brand. Sold a 12-day accessories calendar.',chips:['7.1M on Instagram','$148','Refunded everyone'],
+steps:[
+['No build-up.','It just dropped on 29 October.'],
+['Cheap stuff inside.','Hair ties, keychains and a squishy toy.'],
+['Unboxing went viral.','One video got about 65M views, nearly all negative.'],
+['Said sorry.','Offered a full refund or $150 credit.']],
+plats:[['TikTok','Where the angry unboxings spread.'],['Email','The refund email.'],['Instagram','Kim reposted a Dior unboxing instead.']],
+nancy:'People film every night. If a night has a wipe or a coupon, they will say so.',ig:null}
+];
+let D={"libertylondon": [100, 40067, [["Dcynd-xjR8T", 3561628, 88.9, "09-02", 1, "Take a first look behind the doors"], ["Dd10rQrIiPu", 1095400, 27.3, "09-28", 1, "29 extraordinary products, wrapped"], ["DdEpAFujZo1", 1068987, 26.7, "09-09", 1, "Head of Extraordinary"], ["Dcx3WCsIsJI", 674753, 16.8, "09-02", 1, "Head of Extraordinary has arrived"], ["DdUMp9tDVpW", 654490, 16.3, "09-15", 1, "Besties put their picks to the test"]]], "spacenk": [98, 36567, [["DdGi_5UIktE", 150570, 4.1, "09-10", 1, "The day you've all been waiting for"], ["DcbPuB9oD8c", 69501, 1.9, "08-24", 1, "We caught the Space NK bag"], ["Dft22wsInP9", 59607, 1.6, "11-14", 1, "A little something extra for you"], ["DcbmmwMM4Rg", 51283, 1.4, "08-24", 1, "Time to reveal everything"], ["Dcntmq4NP1U", 49915, 1.4, "08-29", 1, "Now that everything is out there"]]], "charlottetilbury": [74, 304983, [["Dc0kdSjgVt2", 1120936, 3.7, "09-03", 1, "The curtain is rising"], ["DdyWGpwhh14", 347113, 1.1, "09-27", 1, "Showgirls, take your places"], ["Dd4I8nNBcYL", 215610, 0.7, "09-29", 1, "All eyes on the ensemble"], ["DdJJZxVB8PA", 197786, 0.6, "09-11", 1, "Covent Garden under a spell"], ["DcO8LLzp8Tf", 4023880, 13.2, "08-19", 0, "Pampered and powdered (not advent)"]]], "ritualscosmetics": [38, 141393, [["DfW39MNjBt9", 181810, 1.3, "11-05", 1, "Our advent calendar is booked and busy"], ["DfcJPwJFXpv", 89164, 0.6, "11-08", 1, "The Rituals advent calendar is celebrating"], ["DfZjnfSiq_z", 396442, 2.8, "11-06", 0, "Nobody: ... social media team (not advent)"], ["De1FdzplTfr", 392936, 2.8, "10-23", 0, "Founder approves (not advent)"], ["DdJjr-4ATqY", 383842, 2.7, "09-11", 0, "Knock knock (not advent)"]]], "madebymitchell": [100, 64110, [["DfhMyZTRUf5", 235578, 3.7, "11-09", 1, "Kim if u need a hand on next year's advent"], ["De__jU6o9dl", 131707, 2.1, "10-27", 1, "Which glosses you'll be getting"], ["DeSOHeKxRqe", 65695, 1.0, "10-09", 1, "Ain't getting over this calendar"], ["DfO5iiIxLFN", 57698, 0.9, "11-02", 1, "Favourite part of advent"], ["Dd88PDBo4cu", 53546, 0.8, "10-01", 1, "Diamond cheeks in ur advents"]]], "popmart": [50, 262831, [["DeMGBTxBGs2", 699877, 2.7, "10-07", 0, "One little meow (not advent)"], ["Dcda6nyx7iC", 685986, 2.6, "08-25", 0, "Lights down. Coming soon (not advent)"], ["Deyt_T2B9jO", 692609, 2.6, "10-22", 0, "Stepping into the spotlight (not advent)"], ["DdgUjZKGyv6", 624838, 2.4, "09-20", 0, "Outside all day? (not advent)"], ["DcLXU8HxS_G", 554018, 2.1, "08-18", 0, "Soft green, little white fins (not advent)"]]], "lovehoneyofficial": [68, 37740, [["Dc6BjS_AezN", 28114, 0.7, "09-05", 1, "Something sp!cy for December"], ["Dfu9H4glJZs", 13538, 0.4, "11-14", 1, "The best advent calendar is the one..."], ["Dd9D0Z9joS1", 13341, 0.4, "10-01", 1, "Make December more pl@yful"], ["Ddq_YvtDB5Y", 366979, 9.7, "09-24", 0, "Try this instead (not advent)"], ["DdZWO5LiG2l", 298311, 7.9, "09-17", 0, "Save this for a lazy night in (not advent)"]]], "satisfyercom": [2, 266335, [["DcWE7lwCRpn", 523132, 2.0, "08-22", 0, "Ever heard a roar like this? (not advent)"], ["DcObHh_oZ4D", 9537, 0.0, "08-19", 0, "Team scheduled or spontaneous? (not advent)"]]]};
+const S=[{id:'findings'}].concat(B.map(b=>({id:b.id,b})));
+let i=0,year='2026';
+const stage=document.getElementById('stage');
+function reels(b){const d=D[b.ig];if(!b.ig)return '<p class="note">No Instagram data for this brand.</p>';if(!d)return '<p class="note">Loading…</p>';const [n,med,list]=d;return `<p class="note">Score = views ÷ their normal views (median of ${n} Reels in the last 90 days: ${med.toLocaleString()} views). Advent posts first.</p><div class="reels">${list.map((r,k)=>`<div class="reel"><div class="frame" data-code="${r[0]}"><a class="ph" href="https://www.instagram.com/p/${r[0]}/" target="_blank" rel="noopener">▶<br>Watch on Instagram</a></div><div class="score"><b>${r[2].toFixed(1)}x</b><span>${(r[1]/1000).toFixed(0)}K views</span></div><div class="cap">#${k+1} ${r[5]}</div>${r[4]?'':'<span class="tag">Not advent</span>'}<a class="cap" href="https://www.instagram.com/p/${r[0]}/" target="_blank" rel="noopener">Open on Instagram ↗</a></div>`).join('')}</div>`}
+function brand(b,k){return `<div class="meta"><span>Hello Nancy · advent research · ${year}</span><span>${String(k).padStart(2,'0')}</span></div>
+<span class="section">${b.sec}</span>
+<div class="hero" style="background:${b.bg}"><div><h1>${b.name}</h1><p>${b.about}</p><div class="chips">${b.chips.map(c=>`<span class="chip">${c}</span>`).join('')}</div></div>
+<div class="box"><i style="background:${C.r}"></i><i style="background:${C.y}"></i><i style="background:${C.m}"></i><i style="background:${C.m}"></i><i style="background:${C.r}"></i><i style="background:${C.y}"></i><span>Calendar photo here</span></div></div>
+<h2>What they did</h2>${b.steps.map((s,j)=>`<div class="step"><div class="num">${j+1}</div><div><p><b>${s[0]}</b> ${s[1]}</p>${s[2]?`<a class="media" href="${s[2][2]}" target="_blank" rel="noopener"><div class="th" style="background:${s[2][4]}">${s[2][3]}</div><div>${s[2][0]} ↗<small>${s[2][1]}</small></div></a>`:''}</div></div>`).join('')}
+<div class="panel" style="background:${C.r}"><h2 style="margin:0">Where they said it <span style="font-size:14px;font-weight:400">tap one</span></h2><div class="plats">${b.plats.map((p,j)=>`<button class="plat${j?'':' on'}" data-h="${p[1].replace(/"/g,'&quot;')}">${p[0]}</button>`).join('')}</div><div class="how">${b.plats[0][1]}</div></div>
+<h2>Top 5 Instagram Reels</h2>${reels(b)}
+<div class="nancy"><h2 style="margin:0">For Nancy</h2><p>${b.nancy}</p></div>`}
+function findings(){return `<div class="meta"><span>Hello Nancy · advent research</span><span>00</span></div>
+<div class="hero" style="background:${C.y};grid-template-columns:1fr"><div><h1>Advent calendar playbook</h1><p>How big brands ran their advent calendars in ${year}, and what Nancy can copy for 12 Naughty Nights.</p><div class="chips"><span class="chip">${B.length} brands</span><span class="chip">Real Instagram data</span><span class="chip">Scraped 16 Nov 2026</span></div></div></div>
+<div class="grid2"><div class="card" style="background:${C.b}"><h3>What works</h3><p>Make people wait. Give a reward for waiting. Make the box worth filming.</p></div><div class="card" style="background:${C.r}"><h3>What fails</h3><p>Filler inside. Unboxings will count every cheap item, like Skims.</p></div><div class="card" style="background:${C.m}"><h3>Best Reel type</h3><p>A first look or a fun story beats a product list. Liberty’s first look: 89x normal views.</p></div><div class="card" style="background:${C.l}"><h3>Gap for Nancy</h3><p>Sex toy brands sell on price only. Their calendar Reels flop. Nobody does fun.</p></div></div>
+<h2>Brands</h2><div class="list">${B.map((b,k)=>`<div class="li" data-go="${k+1}" style="background:${b.bg}"><b>${b.name}</b><span>${b.sec}</span></div>`).join('')}</div>`}
+function y25(){return `<div class="meta"><span>Hello Nancy · advent research · 2025</span><span>–</span></div><div class="hero" style="background:${C.l};grid-template-columns:1fr"><div><h1>2025 is next</h1><p>Only the ones that worked: Charlotte Tilbury, Sephora, Liberty, Space NK, Lookfantastic, Dior trunk, Burger King, Celebrations, LEGO, Pop Mart.</p></div></div>`}
+function render(){stage.innerHTML='';if(year==='2025'){stage.innerHTML=`<div class="page on">${y25()}</div>`;document.getElementById('count').textContent='2025';dots.innerHTML='';return}
+S.forEach((s,k)=>{const d=document.createElement('div');d.className='page'+(k===i?' on':'');d.innerHTML=k===0?findings():brand(s.b,k);stage.appendChild(d)});
+stage.querySelectorAll('.li').forEach(e=>e.onclick=()=>go(+e.dataset.go));
+stage.querySelectorAll('.plat').forEach(p=>p.onclick=()=>{p.parentNode.querySelectorAll('.plat').forEach(q=>q.classList.remove('on'));p.classList.add('on');p.closest('.panel').querySelector('.how').textContent=p.dataset.h});
+dots.innerHTML=S.map((_,k)=>`<i data-k="${k}"></i>`).join('');dots.querySelectorAll('i').forEach(e=>e.onclick=()=>go(+e.dataset.k));go(i,true)}
+const dots=document.getElementById('dots');
+function loadReels(page){page.querySelectorAll('.frame[data-code]').forEach(f=>{if(f.dataset.done)return;f.dataset.done=1;const w=f.clientWidth||180;const ifr=document.createElement('iframe');ifr.src=`https://www.instagram.com/p/${f.dataset.code}/embed/`;ifr.loading='lazy';ifr.setAttribute('scrolling','no');ifr.title='Instagram Reel';const s=w/326;ifr.style.transform=`scale(${s})`;ifr.style.top=`${-54*s}px`;f.appendChild(ifr)})}
+function go(k,quiet){if(year==='2025')return;i=(k+S.length)%S.length;const pages=stage.querySelectorAll('.page');pages.forEach((p,j)=>p.classList.toggle('on',j===i));dots.querySelectorAll('i').forEach((d,j)=>d.classList.toggle('on',j===i));document.getElementById('count').textContent=i===0?'Findings':`${S[i].b.name} · ${i} of ${S.length-1}`;document.getElementById('pFind').classList.toggle('on',i===0);document.getElementById('pDeck').classList.toggle('on',i>0);if(pages[i])loadReels(pages[i]);try{history.replaceState(null,'','#'+S[i].id)}catch(e){};if(!quiet)window.scrollTo({top:0,behavior:'smooth'})}
+document.getElementById('prev').onclick=()=>go(i-1);document.getElementById('next').onclick=()=>go(i+1);
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(i+1);if(e.key==='ArrowLeft')go(i-1)});
+document.getElementById('pFind').onclick=()=>{setYear('2026');go(0)};document.getElementById('pDeck').onclick=()=>{setYear('2026');go(i||1)};
+function setYear(y){if(year===y)return;year=y;document.getElementById('y26').classList.toggle('on',y==='2026');document.getElementById('y25').classList.toggle('on',y==='2025');render()}
+document.getElementById('y26').onclick=()=>setYear('2026');document.getElementById('y25').onclick=()=>setYear('2025');
+const h=location.hash.slice(1);const hk=S.findIndex(s=>s.id===h);if(hk>=0)i=hk;
+render();
+</script>
+</body>
+</html>
