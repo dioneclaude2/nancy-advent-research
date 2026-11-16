@@ -270,7 +270,7 @@ function y25(){return `<div class="meta"><span>Hello Nancy · advent research ·
 ${B25.map(b=>`<div class="card" style="background:${b[3]};margin-top:14px"><h3 style="margin:0 0 6px">${b[0]}</h3><div class="chips" style="margin:0 0 10px"><span class="chip ig">📸 ${b[1]} followers</span><span class="chip when">🗓 ${b[2]}</span></div><p><b>What they did.</b> ${b[4]}</p><p><b>How it went.</b> ${b[5]}</p><p><b>For Nancy.</b> ${b[6]}</p></div>`).join('')}`}
 
 let view='deck';
-function vrow(t,d,c,items){const all=[...B,...B25];const tile=x=>x[0]==='v'?`<div class="sv1"><div class="frame" data-code="${x[1]}"><a class="ph" href="https://www.instagram.com/p/${x[1]}/" target="_blank" rel="noopener">▶</a></div><small>${x[2]}</small></div>`:`<div class="sv1"><img src="${(all.find(b=>b.id===x[1])||{}).img}" referrerpolicy="no-referrer" loading="lazy" alt="${x[2]}"><small>${x[2]}</small></div>`;return `<div class="card" style="background:${c}"><h3 style="margin:0 0 6px">${t}</h3><p style="margin:0 0 10px">${d}</p><div class="svrow">${items.map(tile).join('')}</div></div>`}
+function vrow(t,d,c,items){const all=[...B,...B25];const tile=x=>x[0]==='v'?`<div class="sv1"><div class="frame" data-code="${x[1]}"><a class="ph" href="https://www.instagram.com/p/${x[1]}/" target="_blank" rel="noopener">▶</a></div><small>${x[2]}</small></div>`:`<div class="sv1"><img src="${x[0]==='u'?x[1]:(all.find(b=>b.id===x[1])||{}).img}" referrerpolicy="no-referrer" loading="lazy" alt="${x[2]}"><small>${x[2]}</small></div>`;return `<div class="card" style="background:${c}"><h3 style="margin:0 0 6px">${t}</h3><p style="margin:0 0 10px">${d}</p><div class="svrow">${items.map(tile).join('')}</div></div>`}
 function summary(){const row=(t,d,c)=>`<div class="card" style="background:${c}"><h3 style="margin:0 0 6px">${t}</h3><p style="margin:0">${d}</p></div>`;
 return `<div class="meta"><span>Hello Nancy · advent research · summary</span><span>★</span></div>
 <div class="hero" style="background:${C.y};grid-template-columns:1fr"><div><h1>The whole thing on one page</h1><p>What the big brands did in 2025 and 2026, what Nancy already does, what we’re missing, and how to use it for 12 Naughty Nights (21 Nov–2 Dec).</p></div></div>
@@ -285,20 +285,20 @@ ${vrow('Posted fun, not lists','First looks and jokes won: Liberty 89x, Mitchell
 ${vrow('What failed','Skims: hair ties and keychains for $148. One unboxing went viral for the wrong reason. Refunds for everyone.',C.l,[['i','skims','Skims']])}
 </div>
 <h2>2. What Nancy already does</h2><div class="grid2">
-${row('✅ List first','Our list gets early access before everyone else, like Liberty and Charlotte Tilbury.',C.m)}
-${row('✅ Referral early access','Friends who refer get in early. Nobody else in this deck does this.',C.m)}
-${row('✅ Golden tickets','Same idea as Liberty’s winning boxes.',C.m)}
-${row('✅ Blink drops','Short, timed drops. Same idea as Burger King’s daily drops.',C.m)}
-${row('✅ A blind-box calendar','12 Naughty Nights: 12 surprises, one hero product to sell.',C.m)}
-${row('✅ A fun brand voice','We already sound like Made By Mitchell and Lookfantastic’s best Reels, not like Lovehoney’s product lists.',C.m)}
+${vrow('✅ List first','Our list gets early access before everyone else, like Liberty and Charlotte Tilbury.',C.m,[['i','liberty','Liberty does it too'],['i','charlotte','So does CT']])}
+${vrow('✅ Referral early access','Friends who refer get in early. Nobody else in this deck does this.',C.m,[['u','https://cdn.shopify.com/s/files/1/0726/3764/5121/files/mm-monster-trio-bundle.png','Our Monster Mansion drop']])}
+${vrow('✅ Golden tickets','Same idea as Liberty’s £1,000 winning boxes.',C.m,[['i','liberty','Liberty’s golden-ticket box']])}
+${vrow('✅ Blink drops','Short, timed drops. Same idea as Burger King’s 110-a-day drops.',C.m,[['i','burgerking','Burger King daily drops']])}
+${vrow('✅ Blind boxes','We already sell surprise boxes. 12 Naughty Nights is the next step.',C.m,[['u','https://cdn.shopify.com/s/files/1/0726/3764/5121/files/monster-xmas-bag-sealed.webp','Christmas Monster Blind Box'],['u','https://cdn.shopify.com/s/files/1/0726/3764/5121/files/monster-xmas-set-open.webp','Christmas Monster Set']])}
+${vrow('✅ Fun characters','LEM, AVO, SMASH and friends already have personality. Lovehoney and Satisfyer don’t.',C.m,[['u','https://cdn.shopify.com/s/files/1/0726/3764/5121/files/WhatsAppImage2023-11-18at14.19.19_2acc31e8.webp','LEM'],['u','https://cdn.shopify.com/s/files/1/0726/3764/5121/files/Untitled_Capture0776_2_4a5f299c-2c95-4dba-9f28-ab76844a5f11.webp','AVO'],['u','https://cdn.shopify.com/s/files/1/0726/3764/5121/files/GeneratedwithKive.ai-createvariationsofTennisballvibratordynamicsmartphonequality.png','SMASH']])}
 </div>
-<h2>3. What we’re missing</h2><div class="grid2">
-${row('❌ A story','No film, character or game yet. Space NK’s bag thief and Liberty’s film did the best numbers.',C.r)}
-${row('❌ A big last night','Nothing special saved for Night 12, like Jo Malone’s secret new scent.',C.r)}
-${row('❌ Something only in the box','No toy or colour you can’t buy anywhere else.',C.r)}
-${row('❌ Creators picking nights','No creator “picks” or a planned unboxing wave.',C.r)}
-${row('❌ A Reel plan','No set first-look, joke and daily-night Reels. Sex toy brands only post price, which is our gap.',C.r)}
-${row('⚠️ Filler risk','Wipes, coupons or a pouch as a “night” will get called out on camera, like Skims.',C.y)}
+<h2>3. What we’re missing</h2><p class="note">Photos show what it looks like when other brands do it.</p><div class="grid2">
+${vrow('❌ A story','No film, character game or mascot plot yet. These did the best numbers.',C.r,[['v','DcbPuB9oD8c','Space NK bag “steals” it'],['v','Dcx3WCsIsJI','Liberty’s film']])}
+${vrow('❌ A big last night','Nothing special saved for Night 12.',C.r,[['i','jomalone','Jo Malone: new scent behind door 25']])}
+${vrow('❌ Something only in the box','No toy or colour you can’t buy anywhere else.',C.r,[['i','sephora','Sephora: 31 box-only items'],['i','lush','Lush: box-only bath bombs']])}
+${vrow('❌ Creators picking nights','No creator “picks” or planned unboxing wave.',C.r,[['i','lookfantastic','Lookfantastic: celebs pick doors'],['v','Det14vCq2Df','Their 6.2x Reel']])}
+${vrow('❌ A Reel plan','No set first-look, joke and daily-night Reels.',C.r,[['v','Dcynd-xjR8T','First look: 89x'],['v','DfhMyZTRUf5','Joke: 3.7x']])}
+${vrow('⚠️ Filler risk','Wipes, coupons or a pouch as a “night” will get called out on camera.',C.y,[['i','skims','Skims: $148 of hair ties']])}
 </div>
 <h2>4. How to use it for 12 Naughty Nights</h2>
 <div class="step"><div class="num">1</div><div><p><b>Now → 20 Nov: tease.</b> LEM “steals” the 12 Naughty Nights box (Space NK bag idea). Post the waitlist number as it grows. Seed creators and give each one a night to reveal.</p></div></div>
