@@ -35,6 +35,7 @@ a{color:inherit}
 .box span{grid-column:span 3;font-size:12px;text-align:center;align-self:center}
 h2{font-size:28px;font-weight:500;margin:30px 0 8px;letter-spacing:-.5px}
 .step{display:flex;gap:14px;margin-top:16px}
+.svrow{display:flex;gap:8px;flex-wrap:wrap}.sv1{width:110px}.sv1 img{width:110px;height:196px;object-fit:cover;border-radius:12px;background:#fff;display:block}.sv1 .frame{width:110px}.sv1 small{display:block;font-size:11px;margin-top:4px}
 .seev{font-size:12px;background:var(--rose);border-radius:999px;padding:2px 8px;white-space:nowrap}
 .step.sv{display:grid;grid-template-columns:34px 1fr 200px;gap:16px;align-items:start;background:#fff;border-radius:16px;padding:14px}.step.sv .frame{width:200px}.vlab{margin-top:12px;padding:10px 12px;border-radius:12px;background:var(--cream)}.vlab b{display:block;font-weight:600}.vlab small{display:block;font-size:12px;opacity:.8;margin:2px 0 6px}
 @media (max-width:760px){.step.sv{grid-template-columns:34px 1fr}.step.sv .frame{grid-column:2;width:100%;max-width:240px}}
@@ -269,18 +270,19 @@ function y25(){return `<div class="meta"><span>Hello Nancy · advent research ·
 ${B25.map(b=>`<div class="card" style="background:${b[3]};margin-top:14px"><h3 style="margin:0 0 6px">${b[0]}</h3><div class="chips" style="margin:0 0 10px"><span class="chip ig">📸 ${b[1]} followers</span><span class="chip when">🗓 ${b[2]}</span></div><p><b>What they did.</b> ${b[4]}</p><p><b>How it went.</b> ${b[5]}</p><p><b>For Nancy.</b> ${b[6]}</p></div>`).join('')}`}
 
 let view='deck';
+function vrow(t,d,c,items){const all=[...B,...B25];const tile=x=>x[0]==='v'?`<div class="sv1"><div class="frame" data-code="${x[1]}"><a class="ph" href="https://www.instagram.com/p/${x[1]}/" target="_blank" rel="noopener">▶</a></div><small>${x[2]}</small></div>`:`<div class="sv1"><img src="${(all.find(b=>b.id===x[1])||{}).img}" referrerpolicy="no-referrer" loading="lazy" alt="${x[2]}"><small>${x[2]}</small></div>`;return `<div class="card" style="background:${c}"><h3 style="margin:0 0 6px">${t}</h3><p style="margin:0 0 10px">${d}</p><div class="svrow">${items.map(tile).join('')}</div></div>`}
 function summary(){const row=(t,d,c)=>`<div class="card" style="background:${c}"><h3 style="margin:0 0 6px">${t}</h3><p style="margin:0">${d}</p></div>`;
 return `<div class="meta"><span>Hello Nancy · advent research · summary</span><span>★</span></div>
 <div class="hero" style="background:${C.y};grid-template-columns:1fr"><div><h1>The whole thing on one page</h1><p>What the big brands did in 2025 and 2026, what Nancy already does, what we’re missing, and how to use it for 12 Naughty Nights (21 Nov–2 Dec).</p></div></div>
 <h2>1. What other brands did</h2><div class="grid2">
-${row('Made people wait','Waitlists and app sign-ups months early. Liberty, Charlotte Tilbury, Sephora, Space NK, Rituals. The list buys first.',C.b)}
-${row('Told a story','Liberty’s film with a famous actress. Space NK’s bag “stole” the calendar. Benefit’s pretend hotel. A story gets shared, a product list doesn’t.',C.r)}
-${row('Hid a reward inside','Liberty’s £1,000 golden tickets. Jo Malone’s secret new scent behind the last door. Sephora’s 31 box-only items.',C.m)}
-${row('Kept it rare','Burger King sold only 550, a few a day. NeeDoh was invite-only. Too little stock made news.',C.l)}
-${row('Let creators pick','Lookfantastic let celebrities choose doors. Liberty and Rituals sent boxes to creators to unbox.',C.y)}
-${row('Made it fun to open','Benefit’s twist-cube. Rituals’ toy train. A box that does something gets filmed.',C.b)}
-${row('Posted fun, not lists','Best Reels were first looks and jokes: Liberty 89x, Lookfantastic 6x, Mitchell’s Kim joke 3.7x. Lovehoney’s product-list Reels did 0.4–0.7x.',C.r)}
-${row('What failed','Skims: cheap filler (hair ties, keychains). One unboxing went viral for the wrong reason. They refunded everyone.',C.l)}
+${vrow('Made people wait','Waitlists and app sign-ups months early. The list buys first.',C.b,[['i','liberty','Liberty'],['i','charlotte','Charlotte Tilbury'],['i','sephora','Sephora']])}
+${vrow('Told a story','Liberty’s film with a famous actress. Space NK’s bag “stole” the calendar. A story gets shared.',C.r,[['v','Dcx3WCsIsJI','Liberty film'],['v','DcbPuB9oD8c','Space NK bag chase']])}
+${vrow('Hid a reward inside','Liberty’s £1,000 golden tickets. Jo Malone’s secret new scent behind door 25. Sephora’s box-only items.',C.m,[['i','jomalone','Jo Malone'],['i','liberty','Liberty']])}
+${vrow('Kept it rare','Burger King sold only 550, a few a day. NeeDoh was invite-only. Too little stock made news.',C.l,[['i','burgerking','Burger King'],['i','needoh','NeeDoh']])}
+${vrow('Let creators pick','Lookfantastic let celebrities choose the doors.',C.y,[['i','lookfantastic','Lookfantastic'],['v','Det14vCq2Df','Their 6.2x Reel']])}
+${vrow('Made it fun to open','Benefit’s twist-cube and hotel. Rituals’ toy train. A box that does something gets filmed.',C.b,[['i','benefit25','Benefit Glam Cube'],['i','rituals','Rituals train']])}
+${vrow('Posted fun, not lists','First looks and jokes won: Liberty 89x, Mitchell’s Kim joke 3.7x. Lovehoney’s product lists did 0.4–0.7x.',C.r,[['v','Dcynd-xjR8T','Liberty 89x'],['v','DfhMyZTRUf5','Mitchell 3.7x']])}
+${vrow('What failed','Skims: hair ties and keychains for $148. One unboxing went viral for the wrong reason. Refunds for everyone.',C.l,[['i','skims','Skims']])}
 </div>
 <h2>2. What Nancy already does</h2><div class="grid2">
 ${row('✅ List first','Our list gets early access before everyone else, like Liberty and Charlotte Tilbury.',C.m)}
@@ -307,7 +309,7 @@ ${row('⚠️ Filler risk','Wipes, coupons or a pouch as a “night” will get 
 <div class="step"><div class="num">6</div><div><p><b>Before shipping: kill the filler.</b> Swap wipes and coupons for real nights, or call them a bonus, not a night (Skims lesson).</p></div></div>
 <div class="step"><div class="num">7</div><div><p><b>After 2 Dec: say “sold out”.</b> Post it loudly and open the 2027 waitlist. Liberty sells the “always sells out” story every year.</p></div></div>
 <div class="nancy" style="margin-top:20px"><h2 style="margin:0">In one line</h2><p>We already have the mechanics (list, referrals, golden tickets, blink drops). What’s missing is the fun part people share: a story, a secret last night, and Reels that make people laugh.</p></div>`}
-function render(){stage.innerHTML='';document.querySelector('.nav').style.display=view==='sum'?'none':'';if(view==='sum'){stage.innerHTML=`<div class="page on">${summary()}</div>`;dots.innerHTML='';document.getElementById('count').textContent='Summary';['pFind','y26','y25'].forEach(x=>document.getElementById(x).classList.remove('on'));document.getElementById('pSum').classList.add('on');try{history.replaceState(null,'','#summary')}catch(e){};return}document.getElementById('pSum').classList.remove('on');document.getElementById(year==='2025'?'y25':'y26').classList.add('on');CUR=year==='2025'?B25:B;S=[{id:'findings'}].concat(CUR.map(b=>({id:b.id,b})));if(i>=S.length)i=0;
+function render(){stage.innerHTML='';document.querySelector('.nav').style.display=view==='sum'?'none':'';if(view==='sum'){stage.innerHTML=`<div class="page on">${summary()}</div>`;setTimeout(()=>loadReels(stage.querySelector('.page')),50);dots.innerHTML='';document.getElementById('count').textContent='Summary';['pFind','y26','y25'].forEach(x=>document.getElementById(x).classList.remove('on'));document.getElementById('pSum').classList.add('on');try{history.replaceState(null,'','#summary')}catch(e){};return}document.getElementById('pSum').classList.remove('on');document.getElementById(year==='2025'?'y25':'y26').classList.add('on');CUR=year==='2025'?B25:B;S=[{id:'findings'}].concat(CUR.map(b=>({id:b.id,b})));if(i>=S.length)i=0;
 S.forEach((s,k)=>{const d=document.createElement('div');d.className='page'+(k===i?' on':'');d.innerHTML=k===0?findings():brand(s.b,k);stage.appendChild(d)});
 stage.querySelectorAll('.li').forEach(e=>e.onclick=()=>go(+e.dataset.go));
 stage.querySelectorAll('.plat').forEach(p=>p.onclick=()=>{p.parentNode.querySelectorAll('.plat').forEach(q=>q.classList.remove('on'));p.classList.add('on');p.closest('.panel').querySelector('.how').textContent=p.dataset.h});
