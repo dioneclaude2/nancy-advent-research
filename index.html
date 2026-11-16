@@ -41,6 +41,8 @@ h2{font-size:28px;font-weight:500;margin:30px 0 8px;letter-spacing:-.5px}
 .media{display:flex;gap:12px;align-items:center;background:#fff;border-radius:14px;padding:10px;margin-top:10px;text-decoration:none;border:2px solid transparent;max-width:460px}
 a.media:hover{border-color:var(--ink)}
 .th{width:84px;height:58px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex:none}
+.memb{display:grid;grid-template-columns:190px 1fr;gap:14px;align-items:end;background:#fff;border-radius:14px;padding:10px;margin-top:10px;max-width:480px}.memb .frame{width:190px}.memb b{display:block;font-weight:600}.memb small{display:block;font-size:12px;opacity:.8;margin:4px 0 8px}
+.mimgs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;max-width:480px}.mimgs img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:12px;display:block}
 .media small{display:block;font-size:12px;opacity:.8}
 .panel{border-radius:18px;padding:18px 20px;margin-top:26px}
 .plats{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
@@ -94,10 +96,10 @@ const C={y:'#FFF36B',b:'#C9ECFF',r:'#FFD6EC',m:'#E3F7C9',l:'#E7DDFF'};
 const B=[
 {id:'liberty',when:'Waitlist July · on sale 2 Sep 2026',f:'1M',img:'https://i8.amplience.net/i/liberty/000868556-R725960006-1?fmt=auto&w=600',cap:'The 2026 box: a paper Liberty shop',name:'Liberty',sec:'Beauty · 1M+',bg:C.b,about:'London department store. Sells a beauty advent calendar every year.',chips:['£285 · worth £1,300','Sold out 11 years running'],
 steps:[
-['Made people wait.','The waitlist opened in summer. Join early, buy first.'],
-['Told a funny story.','A short film where a famous actress plays the boss who checks every product.',['Watch the film','Liberty’s page: film + full unboxing','https://www.libertylondon.com/uk/features/beauty/beauty-advent-calendar','▶',C.r]],
-['Hid golden tickets.','20 boxes had a £1,000 shopping voucher inside.',['See the first look','Their #1 Reel: behind the doors','https://www.instagram.com/p/Dcynd-xjR8T/','🎟',C.y]],
-['Made tiny paper worlds.','Summer teasers showed the box inside paper-cut scenes.',['See the paper worlds','Meet the artist','https://www.libertylondon.com/us/features/beauty/charles-young-in-the-studio.html','✂',C.m]]],
+['Made people wait.','The waitlist opened in summer. Join early, buy first.',['First look','“Take a first look behind the doors” · 2 Sep · 88.9x','https://www.instagram.com/p/Dcynd-xjR8T/','🎟',C.y]],
+['Told a funny story.','A short film where a famous actress plays the boss who checks every product.',['The film','“Head of Extraordinary has arrived” · 2 Sep · 16.8x','https://www.instagram.com/p/Dcx3WCsIsJI/','▶',C.r]],
+['Hid golden tickets.','20 boxes had a £1,000 shopping voucher inside. (No public photo of the ticket.)'],
+['Made tiny paper worlds.','Summer teasers showed the box inside paper-cut scenes.',['Meet the artist','Charles Young’s paper worlds (Liberty)','https://www.libertylondon.com/us/features/beauty/charles-young-in-the-studio.html','✂',C.m,['https://cdn.media.amplience.net/i/liberty/CharlesYoungAdvent-18?w=500','https://cdn.media.amplience.net/i/liberty/CharlesYoungAdvent-15?w=500']]]],
 plats:[['Instagram','Paper-world teasers in summer, then the film on launch day. Their first-look Reel got 89x their normal views.'],['Email','The waitlist got the “it’s live” email first.'],['Creators','Gave free boxes to creators to unbox on video.'],['Press','Beauty magazines reviewed every product.']],
 nancy:'Our golden tickets and early access already copy this. Add one funny story people want to share.',ig:'libertylondon'},
 {id:'charlotte',when:'App early access 3 Sep · on sale 10 Sep 2026',f:'8M',img:'https://images.ctfassets.net/wlke2cbybljx/4Yr1R8CL76rtx9fIz8VNo5/7dc638e3b289eca99c957e3094327439/251027_Holiday-26_sl_CB_260604_Advent_Calendar_Closed_R5_1000x1000__1_.jpg?w=600&q=80&fm=jpg',cap:'Gold box, jewel handles',name:'Charlotte Tilbury',sec:'Beauty · 1M+',bg:C.y,about:'Makeup brand. Puts its bestsellers in a 12-door box.',chips:['£170 · worth £323','15,000 on the waitlist'],
@@ -209,11 +211,15 @@ const S=[{id:'findings'}].concat(B.map(b=>({id:b.id,b})));
 let i=0,year='2026';
 const stage=document.getElementById('stage');
 function reels(b){const d=D[b.ig];if(!b.ig)return '<p class="note">No Instagram data for this brand.</p>';if(!d)return '<p class="note">Loading…</p>';const [n,med,list]=d;return `<p class="note">Score = views ÷ their normal views (median of ${n} Reels in the last 90 days: ${med.toLocaleString()} views). Advent posts first.</p><div class="reels">${list.map((r,k)=>`<div class="reel"><div class="frame" data-code="${r[0]}"><a class="ph" href="https://www.instagram.com/p/${r[0]}/" target="_blank" rel="noopener">▶<br>Watch on Instagram</a></div><div class="score"><b>${r[2].toFixed(1)}x</b><span>${(r[1]/1000).toFixed(0)}K views</span></div><div class="cap">#${k+1} ${r[5]}</div>${r[4]?'':'<span class="tag">Not advent</span>'}<a class="cap" href="https://www.instagram.com/p/${r[0]}/" target="_blank" rel="noopener">Open on Instagram ↗</a></div>`).join('')}</div>`}
+function media(x){const [lab,sub,url,icon,col,imgs]=x;const ig=(url.match(/instagram\.com\/p\/([^/]+)/)||[])[1];
+if(ig)return `<div class="memb"><div class="frame" data-code="${ig}"><a class="ph" href="${url}" target="_blank" rel="noopener">▶<br>Watch on Instagram</a></div><div><b>${lab}</b><small>${sub}</small><a class="cap" href="${url}" target="_blank" rel="noopener">Open on Instagram ↗</a></div></div>`;
+if(imgs)return `<div class="mimgs">${imgs.map(u=>`<img src="${u}" referrerpolicy="no-referrer" loading="lazy" alt="${lab}">`).join('')}</div><a class="cap" href="${url}" target="_blank" rel="noopener">${lab}: ${sub} ↗</a>`;
+return `<a class="media" href="${url}" target="_blank" rel="noopener"><div class="th" style="background:${col}">${icon}</div><div>${lab} ↗<small>${sub}</small></div></a>`}
 function brand(b,k){return `<div class="meta"><span>Hello Nancy · advent research · ${year}</span><span>${String(k).padStart(2,'0')}</span></div>
 <span class="section">${b.sec}</span>
 <div class="hero" style="background:${b.bg}"><div><h1>${b.name}</h1><p>${b.about}</p><div class="chips"><span class="chip ig">📸 ${b.f} Instagram followers</span><span class="chip when">🗓 ${b.when}</span>${b.chips.map(c=>`<span class="chip">${c}</span>`).join('')}</div></div>
 <div class="cal"><img src="${b.img}" alt="${b.name} advent calendar 2026" referrerpolicy="no-referrer" loading="lazy"><small>${b.cap}</small></div></div>
-<h2>What they did</h2>${b.steps.map((s,j)=>`<div class="step"><div class="num">${j+1}</div><div><p><b>${s[0]}</b> ${s[1]}</p>${s[2]?`<a class="media" href="${s[2][2]}" target="_blank" rel="noopener"><div class="th" style="background:${s[2][4]}">${s[2][3]}</div><div>${s[2][0]} ↗<small>${s[2][1]}</small></div></a>`:''}</div></div>`).join('')}
+<h2>What they did</h2>${b.steps.map((s,j)=>`<div class="step"><div class="num">${j+1}</div><div><p><b>${s[0]}</b> ${s[1]}</p>${s[2]?media(s[2]):''}</div></div>`).join('')}
 <div class="panel" style="background:${C.r}"><h2 style="margin:0">Where they said it <span style="font-size:14px;font-weight:400">tap one</span></h2><div class="plats">${b.plats.map((p,j)=>`<button class="plat${j?'':' on'}" data-h="${p[1].replace(/"/g,'&quot;')}">${p[0]}</button>`).join('')}</div><div class="how">${b.plats[0][1]}</div></div>
 <h2>Top 5 Instagram Reels</h2>${reels(b)}
 <div class="nancy"><h2 style="margin:0">For Nancy</h2><p>${b.nancy}</p></div>`}
