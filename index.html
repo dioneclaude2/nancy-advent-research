@@ -88,7 +88,7 @@ a.media:hover{border-color:var(--ink)}
 <div class="top">
 <button class="pill" id="pFind">Brand search findings</button>
 <div class="seg"><button id="y26" class="on">2026</button><button id="y25">2025</button></div>
-<button class="pill" id="pDeck">Deck</button>
+<button class="pill" id="pSum">Summary</button>
 <span class="count" id="count"></span>
 </div>
 <div class="stage" id="stage"></div>
@@ -267,20 +267,60 @@ how:'Fragrance one sold out in 3 days. Beauty one sold out in November.',nancy:'
 function y25(){return `<div class="meta"><span>Hello Nancy · advent research · 2025</span><span>–</span></div>
 <div class="hero" style="background:${C.l};grid-template-columns:1fr"><div><h1>2025: the ones that worked</h1><p>Only campaigns that sold out or got people talking. One card per brand.</p><div class="chips"><span class="chip">${B25.length} brands</span><span class="chip">No Reels scrape for 2025</span></div></div></div>
 ${B25.map(b=>`<div class="card" style="background:${b[3]};margin-top:14px"><h3 style="margin:0 0 6px">${b[0]}</h3><div class="chips" style="margin:0 0 10px"><span class="chip ig">📸 ${b[1]} followers</span><span class="chip when">🗓 ${b[2]}</span></div><p><b>What they did.</b> ${b[4]}</p><p><b>How it went.</b> ${b[5]}</p><p><b>For Nancy.</b> ${b[6]}</p></div>`).join('')}`}
-function render(){stage.innerHTML='';CUR=year==='2025'?B25:B;S=[{id:'findings'}].concat(CUR.map(b=>({id:b.id,b})));if(i>=S.length)i=0;
+
+let view='deck';
+function summary(){const row=(t,d,c)=>`<div class="card" style="background:${c}"><h3 style="margin:0 0 6px">${t}</h3><p style="margin:0">${d}</p></div>`;
+return `<div class="meta"><span>Hello Nancy · advent research · summary</span><span>★</span></div>
+<div class="hero" style="background:${C.y};grid-template-columns:1fr"><div><h1>The whole thing on one page</h1><p>What the big brands did in 2025 and 2026, what Nancy already does, what we’re missing, and how to use it for 12 Naughty Nights (21 Nov–2 Dec).</p></div></div>
+<h2>1. What other brands did</h2><div class="grid2">
+${row('Made people wait','Waitlists and app sign-ups months early. Liberty, Charlotte Tilbury, Sephora, Space NK, Rituals. The list buys first.',C.b)}
+${row('Told a story','Liberty’s film with a famous actress. Space NK’s bag “stole” the calendar. Benefit’s pretend hotel. A story gets shared, a product list doesn’t.',C.r)}
+${row('Hid a reward inside','Liberty’s £1,000 golden tickets. Jo Malone’s secret new scent behind the last door. Sephora’s 31 box-only items.',C.m)}
+${row('Kept it rare','Burger King sold only 550, a few a day. NeeDoh was invite-only. Too little stock made news.',C.l)}
+${row('Let creators pick','Lookfantastic let celebrities choose doors. Liberty and Rituals sent boxes to creators to unbox.',C.y)}
+${row('Made it fun to open','Benefit’s twist-cube. Rituals’ toy train. A box that does something gets filmed.',C.b)}
+${row('Posted fun, not lists','Best Reels were first looks and jokes: Liberty 89x, Lookfantastic 6x, Mitchell’s Kim joke 3.7x. Lovehoney’s product-list Reels did 0.4–0.7x.',C.r)}
+${row('What failed','Skims: cheap filler (hair ties, keychains). One unboxing went viral for the wrong reason. They refunded everyone.',C.l)}
+</div>
+<h2>2. What Nancy already does</h2><div class="grid2">
+${row('✅ List first','Our list gets early access before everyone else, like Liberty and Charlotte Tilbury.',C.m)}
+${row('✅ Referral early access','Friends who refer get in early. Nobody else in this deck does this.',C.m)}
+${row('✅ Golden tickets','Same idea as Liberty’s winning boxes.',C.m)}
+${row('✅ Blink drops','Short, timed drops. Same idea as Burger King’s daily drops.',C.m)}
+${row('✅ A blind-box calendar','12 Naughty Nights: 12 surprises, one hero product to sell.',C.m)}
+${row('✅ A fun brand voice','We already sound like Made By Mitchell and Lookfantastic’s best Reels, not like Lovehoney’s product lists.',C.m)}
+</div>
+<h2>3. What we’re missing</h2><div class="grid2">
+${row('❌ A story','No film, character or game yet. Space NK’s bag thief and Liberty’s film did the best numbers.',C.r)}
+${row('❌ A big last night','Nothing special saved for Night 12, like Jo Malone’s secret new scent.',C.r)}
+${row('❌ Something only in the box','No toy or colour you can’t buy anywhere else.',C.r)}
+${row('❌ Creators picking nights','No creator “picks” or a planned unboxing wave.',C.r)}
+${row('❌ A Reel plan','No set first-look, joke and daily-night Reels. Sex toy brands only post price, which is our gap.',C.r)}
+${row('⚠️ Filler risk','Wipes, coupons or a pouch as a “night” will get called out on camera, like Skims.',C.y)}
+</div>
+<h2>4. How to use it for 12 Naughty Nights</h2>
+<div class="step"><div class="num">1</div><div><p><b>Now → 20 Nov: tease.</b> LEM “steals” the 12 Naughty Nights box (Space NK bag idea). Post the waitlist number as it grows. Seed creators and give each one a night to reveal.</p></div></div>
+<div class="step"><div class="num">2</div><div><p><b>21 Nov: list + referrals open first.</b> First-look Reel on launch day (Liberty’s did 89x). Say how many boxes have golden tickets.</p></div></div>
+<div class="step"><div class="num">3</div><div><p><b>21 Nov → 2 Dec: blink drops at set times.</b> Few boxes per drop, same time daily (Burger King). Repost every unboxing and golden ticket win.</p></div></div>
+<div class="step"><div class="num">4</div><div><p><b>Night 12: the secret.</b> Save the best toy or a box-only colour for last (Jo Malone). It gives people a reason to film every night.</p></div></div>
+<div class="step"><div class="num">5</div><div><p><b>Every night: fun Reels, not product lists.</b> Jokes, reactions, fast replies to news (Mitchell). Keep LEM, AVO and friends as the characters.</p></div></div>
+<div class="step"><div class="num">6</div><div><p><b>Before shipping: kill the filler.</b> Swap wipes and coupons for real nights, or call them a bonus, not a night (Skims lesson).</p></div></div>
+<div class="step"><div class="num">7</div><div><p><b>After 2 Dec: say “sold out”.</b> Post it loudly and open the 2027 waitlist. Liberty sells the “always sells out” story every year.</p></div></div>
+<div class="nancy" style="margin-top:20px"><h2 style="margin:0">In one line</h2><p>We already have the mechanics (list, referrals, golden tickets, blink drops). What’s missing is the fun part people share: a story, a secret last night, and Reels that make people laugh.</p></div>`}
+function render(){stage.innerHTML='';if(view==='sum'){stage.innerHTML=`<div class="page on">${summary()}</div>`;dots.innerHTML='';document.getElementById('count').textContent='Summary';['pFind','y26','y25'].forEach(x=>document.getElementById(x).classList.remove('on'));document.getElementById('pSum').classList.add('on');try{history.replaceState(null,'','#summary')}catch(e){};return}document.getElementById('pSum').classList.remove('on');document.getElementById(year==='2025'?'y25':'y26').classList.add('on');CUR=year==='2025'?B25:B;S=[{id:'findings'}].concat(CUR.map(b=>({id:b.id,b})));if(i>=S.length)i=0;
 S.forEach((s,k)=>{const d=document.createElement('div');d.className='page'+(k===i?' on':'');d.innerHTML=k===0?findings():brand(s.b,k);stage.appendChild(d)});
 stage.querySelectorAll('.li').forEach(e=>e.onclick=()=>go(+e.dataset.go));
 stage.querySelectorAll('.plat').forEach(p=>p.onclick=()=>{p.parentNode.querySelectorAll('.plat').forEach(q=>q.classList.remove('on'));p.classList.add('on');p.closest('.panel').querySelector('.how').textContent=p.dataset.h});
 dots.innerHTML=S.map((_,k)=>`<i data-k="${k}"></i>`).join('');dots.querySelectorAll('i').forEach(e=>e.onclick=()=>go(+e.dataset.k));go(i,true)}
 const dots=document.getElementById('dots');
 function loadReels(page){page.querySelectorAll('.frame[data-code]').forEach(f=>{if(f.dataset.done)return;f.dataset.done=1;const w=f.clientWidth||200;const E=400,sc=(w*1.4222)/E;const ifr=document.createElement('iframe');ifr.src=`https://www.instagram.com/reel/${f.dataset.code}/embed/`;ifr.loading='lazy';ifr.setAttribute('scrolling','no');ifr.setAttribute('allow','autoplay; encrypted-media; picture-in-picture');ifr.title='Instagram Reel';ifr.style.width=E+'px';ifr.style.height='760px';ifr.style.transform=`scale(${sc})`;ifr.style.left=`${-0.1484*E*sc}px`;ifr.style.top=`${-54*sc}px`;f.appendChild(ifr)})}
-function go(k,quiet){i=(k+S.length)%S.length;const pages=stage.querySelectorAll('.page');pages.forEach((p,j)=>p.classList.toggle('on',j===i));dots.querySelectorAll('i').forEach((d,j)=>d.classList.toggle('on',j===i));document.getElementById('count').textContent=i===0?'Findings':`${S[i].b.name} · ${i} of ${S.length-1}`;document.getElementById('pFind').classList.toggle('on',i===0);document.getElementById('pDeck').classList.toggle('on',i>0);if(pages[i])loadReels(pages[i]);try{history.replaceState(null,'','#'+S[i].id)}catch(e){};if(!quiet)window.scrollTo({top:0,behavior:'smooth'})}
+function go(k,quiet){if(view==='sum')return;i=(k+S.length)%S.length;const pages=stage.querySelectorAll('.page');pages.forEach((p,j)=>p.classList.toggle('on',j===i));dots.querySelectorAll('i').forEach((d,j)=>d.classList.toggle('on',j===i));document.getElementById('count').textContent=i===0?'Findings':`${S[i].b.name} · ${i} of ${S.length-1}`;document.getElementById('pFind').classList.toggle('on',i===0);if(pages[i])loadReels(pages[i]);try{history.replaceState(null,'','#'+S[i].id)}catch(e){};if(!quiet)window.scrollTo({top:0,behavior:'smooth'})}
 document.getElementById('prev').onclick=()=>go(i-1);document.getElementById('next').onclick=()=>go(i+1);
 document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(i+1);if(e.key==='ArrowLeft')go(i-1)});
-document.getElementById('pFind').onclick=()=>go(0);document.getElementById('pDeck').onclick=()=>go(i||1);
-function setYear(y){if(year===y)return;year=y;i=0;document.getElementById('y26').classList.toggle('on',y==='2026');document.getElementById('y25').classList.toggle('on',y==='2025');render()}
+document.getElementById('pFind').onclick=()=>{if(view!=='deck'){view='deck';i=0;render()}else go(0)};document.getElementById('pSum').onclick=()=>{view='sum';render();window.scrollTo({top:0})};
+function setYear(y){if(year===y&&view==='deck')return;view='deck';year=y;i=0;document.getElementById('y26').classList.toggle('on',y==='2026');document.getElementById('y25').classList.toggle('on',y==='2025');render()}
 document.getElementById('y26').onclick=()=>setYear('2026');document.getElementById('y25').onclick=()=>setYear('2025');
-const h=location.hash.slice(1);if(B25.some(b=>b.id===h)){year='2025';document.getElementById('y26').classList.remove('on');document.getElementById('y25').classList.add('on');S=[{id:'findings'}].concat(B25.map(b=>({id:b.id,b})));CUR=B25}const hk=S.findIndex(s=>s.id===h);if(hk>=0)i=hk;
+const h=location.hash.slice(1);if(h==='summary')view='sum';if(B25.some(b=>b.id===h)){year='2025';document.getElementById('y26').classList.remove('on');document.getElementById('y25').classList.add('on');S=[{id:'findings'}].concat(B25.map(b=>({id:b.id,b})));CUR=B25}const hk=S.findIndex(s=>s.id===h);if(hk>=0)i=hk;
 render();
 </script>
 </body>
